@@ -1,4 +1,7 @@
 import sys
+import sqlite3
+import pickle
+import db_module
 from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton
 from window_ortocalc import Ui_MainWindow
 
@@ -8,7 +11,7 @@ class OrtoCalc(QMainWindow):
         super(OrtoCalc, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-
+        db_module.db_connect()
         self.pat_clear = [0 for i in range(24)]
         self.ind_pat_clear = [0 for i in range(4)]
 
@@ -48,6 +51,10 @@ class OrtoCalc(QMainWindow):
         self.ui.macrodent.clicked.connect(self.btn_macro)
         self.ui.microdent.clicked.connect(self.btn_micro)
         self.ui.clear_btn.clicked.connect(self.btn_clear)
+        self.ui.add_pat_btn.clicked.connect(self.db_add)
+
+    def db_add(self):
+        db_module.db_insert('Test',self.pat_macro)
 
     def calculate_all(self):  # Расчет всех методов
         self.pon_method()
@@ -164,5 +171,4 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = OrtoCalc()
     window.show()
-
     sys.exit(app.exec())

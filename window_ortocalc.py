@@ -373,13 +373,14 @@ class Ui_MainWindow(object):
 
         self.del_pat_btn = QPushButton(self.centralwidget)
         self.del_pat_btn.setObjectName(u"del_pat_btn")
-        self.del_pat_btn.setGeometry(QRect(912, 10, 75, 28))
+        self.del_pat_btn.setGeometry(QRect(920, 10, 75, 28))
         self.pat_selector = QComboBox(self.centralwidget)
         self.pat_selector.setObjectName(u"pat_selector")
-        self.pat_selector.setGeometry(QRect(93, 12, 711, 28))
+        self.pat_selector.setGeometry(QRect(93, 12, 631, 28))
+        self.pat_selector.setEditable(True)
         self.add_pat_btn = QPushButton(self.centralwidget)
         self.add_pat_btn.setObjectName(u"add_pat_btn")
-        self.add_pat_btn.setGeometry(QRect(822, 10, 80, 28))
+        self.add_pat_btn.setGeometry(QRect(730, 10, 80, 28))
         self.add_pat_btn.setStyleSheet(u"QPushButton:{\n"
 "\n"
 "border_radius: 7px;\n"
@@ -454,6 +455,15 @@ class Ui_MainWindow(object):
 
         self.bolton.addWidget(self.bolton_Overall)
 
+        self.add_pat_btn_2 = QPushButton(self.centralwidget)
+        self.add_pat_btn_2.setObjectName(u"add_pat_btn_2")
+        self.add_pat_btn_2.setGeometry(QRect(819, 10, 91, 28))
+        self.add_pat_btn_2.setStyleSheet(u"QPushButton:{\n"
+"\n"
+"border_radius: 7px;\n"
+"width: 10 px;\n"
+"height: 30 px;\n"
+"}")
         MainWindow.setCentralWidget(self.centralwidget)
         self.ton_frame.raise_()
         self.bolton_frame.raise_()
@@ -464,6 +474,7 @@ class Ui_MainWindow(object):
         self.pat_selector.raise_()
         self.add_pat_btn.raise_()
         self.pat_label.raise_()
+        self.add_pat_btn_2.raise_()
         QWidget.setTabOrder(self.zub_16, self.zub_15)
         QWidget.setTabOrder(self.zub_15, self.zub_14)
         QWidget.setTabOrder(self.zub_14, self.zub_13)
@@ -527,5 +538,6 @@ class Ui_MainWindow(object):
         self.bolton_name.setText(QCoreApplication.translate("MainWindow", u"\u041c\u0435\u0442\u043e\u0434 \u0411\u043e\u043b\u0442\u043e\u043d\u0430", None))
         self.bolton_Anterior.setText(QCoreApplication.translate("MainWindow", u"Anterior Ratio (n = 77,2%): 77,18%", None))
         self.bolton_Overall.setText(QCoreApplication.translate("MainWindow", u"Overall Ratio (n = 91,3%): 91,39%", None))
+        self.add_pat_btn_2.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c", None))
     # retranslateUi
 
