@@ -1,9 +1,12 @@
 import sys
 import sqlite3
 import pickle
+
+import add_pat_window
 import db_module
-from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton
+from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton,QComboBox,QCompleter
 from window_ortocalc import Ui_MainWindow
+from add_pat_window import Pat_Window
 
 
 class OrtoCalc(QMainWindow):
@@ -11,7 +14,7 @@ class OrtoCalc(QMainWindow):
         super(OrtoCalc, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        db_module.db_connect()
+        self.w = None
         self.pat_clear = [0 for i in range(24)]
         self.ind_pat_clear = [0 for i in range(4)]
 
@@ -34,6 +37,8 @@ class OrtoCalc(QMainWindow):
 
         self.ind_pat_micro = [35.7, 46.7, 26.5, 34.6]
 
+        self.combo_data = db_module.db_pat_box()
+
         # Поля
         self.ui.pon_1.setText(f'Ширина ряда 14 - 24 - Расчет не проведен')
         self.ui.pon_2.setText(f'Ширина ряда 16 - 26 - Расчет не проведен')
@@ -53,8 +58,26 @@ class OrtoCalc(QMainWindow):
         self.ui.clear_btn.clicked.connect(self.btn_clear)
         self.ui.add_pat_btn.clicked.connect(self.db_add)
 
+        #Селектор
+        # self.ui.pat_selector.setEditable(True)
+        # self.ui.pat_selector.setInsertPolicy(QComboBox.InsertPolicy.NoInsert)
+        self.ui.pat_selector.completer().setCompletionMode(QCompleter.CompletionMode.PopupCompletion)
+
+
+        self.ui.pat_selector.addItems(self.combo_data)
+        self.ui.pat_selector.setCurrentText('')
+
+
     def db_add(self):
-        db_module.db_insert('Test',self.pat_macro)
+        if self.w is None:
+            self.window_pat = Pat_Window()
+            self.window_pat.show()
+        else:
+            self.w.close()
+            self.w = None
+            self.ui.pat_selector.clear()
+            self.ui.pat_selector.addItems(self.combo_data)
+
 
     def calculate_all(self):  # Расчет всех методов
         self.pon_method()
