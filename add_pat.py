@@ -18,15 +18,14 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QDateEdit, QGridLayout, QHBoxLayout,
     QLabel, QLineEdit, QPushButton, QSizePolicy,
     QSplitter, QWidget)
-import sys
-# import add-pat-res-rc_rc
+# import add-pat-res_rc
 import res_rc
 
 class Ui_widget(object):
     def setupUi(self, widget):
         if not widget.objectName():
             widget.setObjectName(u"widget")
-        widget.setWindowModality(Qt.NonModal)
+        widget.setWindowModality(Qt.WindowModal)
         widget.setEnabled(True)
         widget.resize(310, 220)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -39,12 +38,29 @@ class Ui_widget(object):
         icon = QIcon()
         icon.addFile(u":/img/favicon.ico", QSize(), QIcon.Normal, QIcon.Off)
         widget.setWindowIcon(icon)
+        widget.setStyleSheet(u"background-color: rgb(255, 255, 255);")
         self.pushButton_add = QPushButton(widget)
         self.pushButton_add.setObjectName(u"pushButton_add")
-        self.pushButton_add.setGeometry(QRect(220, 180, 81, 31))
+        self.pushButton_add.setGeometry(QRect(190, 180, 111, 31))
+        self.pushButton_add.setStyleSheet(u"QPushButton  {\n"
+"	background-color: rgb(255, 255, 255); \n"
+"  font-weight: 600;\n"
+"  border-radius: 6px;\n"
+"  border: 1px solid rgb(0, 0, 0);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"  background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:1, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(162, 216, 255, 255));;\n"
+"  border: 2px solid rgb(55, 111, 167);\n"
+"}\n"
+"\n"
+"QPushButton:pressed  {\n"
+"  background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:1, stop:0  rgba(162, 216, 255, 255), stop:1  rgba(255, 255, 255, 255));;\n"
+"  border: 2px solid rgb(55, 111, 167);\n"
+"}")
         self.label_info = QLabel(widget)
         self.label_info.setObjectName(u"label_info")
-        self.label_info.setGeometry(QRect(10, 180, 211, 31))
+        self.label_info.setGeometry(QRect(10, 180, 171, 31))
         font = QFont()
         font.setPointSize(10)
         font.setBold(True)
@@ -112,18 +128,18 @@ class Ui_widget(object):
         self.gridLayout.addWidget(self.lineEdit_Fam, 0, 1, 1, 1)
 
         self.splitter.addWidget(self.layoutWidget)
-        self.widget1 = QWidget(self.splitter)
-        self.widget1.setObjectName(u"widget1")
-        self.horizontalLayout = QHBoxLayout(self.widget1)
+        self.layoutWidget1 = QWidget(self.splitter)
+        self.layoutWidget1.setObjectName(u"layoutWidget1")
+        self.horizontalLayout = QHBoxLayout(self.layoutWidget1)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.label_5 = QLabel(self.widget1)
+        self.label_5 = QLabel(self.layoutWidget1)
         self.label_5.setObjectName(u"label_5")
         self.label_5.setFont(font)
 
         self.horizontalLayout.addWidget(self.label_5)
 
-        self.dateEdit_birthdau = QDateEdit(self.widget1)
+        self.dateEdit_birthdau = QDateEdit(self.layoutWidget1)
         self.dateEdit_birthdau.setObjectName(u"dateEdit_birthdau")
         self.dateEdit_birthdau.setFont(font2)
         self.dateEdit_birthdau.setMinimumDate(QDate(1900, 9, 14))
@@ -132,7 +148,7 @@ class Ui_widget(object):
 
         self.horizontalLayout.addWidget(self.dateEdit_birthdau)
 
-        self.splitter.addWidget(self.widget1)
+        self.splitter.addWidget(self.layoutWidget1)
         QWidget.setTabOrder(self.lineEdit_Fam, self.lineEdit_name)
         QWidget.setTabOrder(self.lineEdit_name, self.lineEdit_surname)
 
@@ -151,7 +167,6 @@ class Ui_widget(object):
         self.label_3.setText(QCoreApplication.translate("widget", u"\u041e\u0442\u0447\u0435\u0441\u0442\u0432\u043e", None))
         self.lineEdit_name.setText("")
         self.lineEdit_name.setPlaceholderText("")
-        self.label_5.setText(QCoreApplication.translate("widget", u"\u0414\u0430\u0442\u0430 \u0440\u043e\u0436\u0434\u0435\u043d\u0438\u044f", None))
+        self.label_5.setText(QCoreApplication.translate("widget", u"Дата заполнения:", None))
     # retranslateUi
-
 

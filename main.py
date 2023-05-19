@@ -1,12 +1,12 @@
 import sys
-import sqlite3
-import pickle
-
-import add_pat_window
-import db_module
-from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton,QComboBox,QCompleter
+import pyperclip
+from PySide6 import QtWidgets
+from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton, QComboBox, QCompleter, QDialog
 from window_ortocalc import Ui_MainWindow
-from add_pat_window import Pat_Window
+from add_pat_window import Pat_Window, Ui_widget
+from MethodCalculate import MethodCalculate as mc
+from db_connection import Data as conn
+from datetime import datetime as dt
 
 
 class OrtoCalc(QMainWindow):
@@ -15,40 +15,9 @@ class OrtoCalc(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.w = None
-        self.pat_clear = [0 for i in range(24)]
-        self.ind_pat_clear = [0 for i in range(4)]
-
-        self.pat_norm = [10.61, 6.59, 7.11, 7.71, 6.82, 8.52,
-                         8.52, 6.82, 7.71, 7.11, 6.59, 10.61,
-                         11.43, 7.12, 6.94, 6.39, 6.21, 5.19,
-                         5.19, 6.21, 6.39, 6.94, 7.12, 11.43]
-        self.ind_pat_norm = [36, 47, 26, 35]
-
-        self.pat_macro = [10.75, 6.96, 6.69, 8.61, 7.73, 9.71,
-                          9.71, 7.73, 8.61, 6.69, 6.96, 10.75,
-                          11.18, 7.51, 7.36, 7.39, 6.67, 6.08,
-                          6.08, 6.67, 7.39, 7.36, 7.51, 11.18]
-        self.ind_pat_macro = [41, 53.6, 30, 39.2]
-
-        self.pat_micro = [9.82, 6.42, 6.58, 8.09, 6.81, 8.39,
-                          8.39, 6.81, 8.09, 6.58, 6.42, 9.82,
-                          10.39, 6.73, 7.02, 6.71, 6.24, 5.03,
-                          5.03, 6.24, 6.71, 7.02, 6.73, 10.39]
-
-        self.ind_pat_micro = [35.7, 46.7, 26.5, 34.6]
-
-        self.combo_data = db_module.db_pat_box()
-
-        # Поля
-        self.ui.pon_1.setText(f'Ширина ряда 14 - 24 - Расчет не проведен')
-        self.ui.pon_2.setText(f'Ширина ряда 16 - 26 - Расчет не проведен')
-        self.ui.pon_3.setText(f'Ширина ряда 34 - 44 - Расчет не проведен')
-        self.ui.pon_4.setText(f'Ширина ряда 36 - 46 - Расчет не проведен')
-        self.ui.ton_1.setText(f'Сумма 4х резцов ВЧ: --')
-        self.ui.ton_2.setText(f'Сумма 4х резцов НЧ: --')
-        self.ui.ton_3.setText(f'Заполните данные')
-        self.ui.bolton_Anterior.setText(f'Anterior Ratio (n = 77,2%): --')
-        self.ui.bolton_Overall.setText(f'Overall Ratio (n = 91,3%): --')
+        self.mc = mc()
+        self.conn = conn()
+        # self.combo_data = db_module.db_pat_box()
 
         # Кнопки
         self.ui.calculate_btn.clicked.connect(self.calculate_all)
@@ -58,41 +27,42 @@ class OrtoCalc(QMainWindow):
         self.ui.clear_btn.clicked.connect(self.btn_clear)
         self.ui.add_pat_btn.clicked.connect(self.db_add)
 
-        #Селектор
-        # self.ui.pat_selector.setEditable(True)
-        # self.ui.pat_selector.setInsertPolicy(QComboBox.InsertPolicy.NoInsert)
+        # Селектор
         self.ui.pat_selector.completer().setCompletionMode(QCompleter.CompletionMode.PopupCompletion)
-
-
-        self.ui.pat_selector.addItems(self.combo_data)
+        self.ui.pat_selector.addItems(self.conn.add_box_pat())
         self.ui.pat_selector.setCurrentText('')
-
 
     def db_add(self):
         if self.w is None:
-            self.window_pat = Pat_Window()
-            self.window_pat.show()
+            self.new_window = QtWidgets.QDialog()
+            self.ui_window = Ui_widget()
+            self.ui_window.setupUi(self.new_window)
+            self.ui_window.dateEdit_birthdau.setDate(dt.now())
+            self.new_window.show()
+            self.ui_window.pushButton_add.clicked.connect(self.add_to_base)
         else:
             self.w.close()
             self.w = None
-            self.ui.pat_selector.clear()
-            self.ui.pat_selector.addItems(self.combo_data)
 
+    def add_to_base(self):
+        name = f'{self.ui_window.lineEdit_Fam.text()} {self.ui_window.lineEdit_name.text()} ' \
+               f'{self.ui_window.lineEdit_surname.text()}'
+        date = self.ui_window.dateEdit_birthdau.text()
+        info1 = '*'.join([str(i) for i in mc.pat_clear])
+        info2 = '*'.join([str(i) for i in mc.ind_pat_clear])
+        if self.conn.filter_pat(name, date):
+            self.ui_window.label_info.setText('Повтор данных!')
+        else:
+            self.conn.add_new_patient(name, date, info1, info2)
+            self.new_window.close()
+            self.ui.pat_selector.clear()
+            self.ui.pat_selector.addItems(self.conn.add_box_pat())
+            self.ui.pat_selector.setCurrentText('')
 
     def calculate_all(self):  # Расчет всех методов
         self.pon_method()
         self.ton_method()
         self.bolton_method()
-
-    def jaw_re(self) -> list:
-        return [self.ui.zub_16.value(), self.ui.zub_15.value(), self.ui.zub_14.value(), self.ui.zub_13.value(),
-                self.ui.zub_12.value(), self.ui.zub_11.value(),
-                self.ui.zub_21.value(), self.ui.zub_22.value(), self.ui.zub_23.value(), self.ui.zub_24.value(),
-                self.ui.zub_25.value(), self.ui.zub_26.value(), self.ui.zub_36.value(), self.ui.zub_35.value(),
-                self.ui.zub_34.value(), self.ui.zub_33.value(),
-                self.ui.zub_32.value(), self.ui.zub_31.value(),
-                self.ui.zub_41.value(), self.ui.zub_42.value(), self.ui.zub_43.value(), self.ui.zub_44.value(),
-                self.ui.zub_45.value(), self.ui.zub_46.value()]
 
     def jaw_re_field(self) -> list:
         return [self.ui.zub_16, self.ui.zub_15, self.ui.zub_14, self.ui.zub_13,
@@ -106,6 +76,9 @@ class OrtoCalc(QMainWindow):
 
     def jaw_index_field(self) -> list:
         return [self.ui.zub_14_24, self.ui.zub_16_26, self.ui.zub_34_44, self.ui.zub_36_46]
+
+    def jaw_re(self) -> list:
+        return [i.value() for i in self.jaw_re_field()]
 
     def pon_method(self):  # методо Пона
         jaw_ton = self.jaw_re()
@@ -165,16 +138,16 @@ class OrtoCalc(QMainWindow):
             f'Overall Ratio (n = 91,3%): {bolton_res(sum(self.jaw_re()[12:]), sum(self.jaw_re()[0:12]))}')
 
     def btn_norm(self):  # нормодентия
-        self.field_setter(self.pat_norm, self.ind_pat_norm)
+        self.field_setter(mc.pat_norm, mc.ind_pat_norm)
 
     def btn_macro(self):  # макродентия
-        self.field_setter(self.pat_macro, self.ind_pat_macro)
+        self.field_setter(mc.pat_macro, mc.ind_pat_macro)
 
     def btn_micro(self):  # микродентия
-        self.field_setter(self.pat_micro, self.ind_pat_micro)
+        self.field_setter(mc.pat_micro, mc.ind_pat_micro)
 
     def btn_clear(self):  # очистка
-        self.field_setter(self.pat_clear, self.ind_pat_clear)
+        self.field_setter(mc.pat_clear, mc.ind_pat_clear)
 
     def field_setter(self, pat, ind):  # установщик всех полей
         jaw = self.jaw_re_field()

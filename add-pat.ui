@@ -3,7 +3,7 @@
  <class>widget</class>
  <widget class="QWidget" name="widget">
   <property name="windowModality">
-   <enum>Qt::NonModal</enum>
+   <enum>Qt::WindowModal</enum>
   </property>
   <property name="enabled">
    <bool>true</bool>
@@ -41,14 +41,35 @@
    <iconset resource="res-rc.qrc">
     <normaloff>:/img/favicon.ico</normaloff>:/img/favicon.ico</iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(255, 255, 255);</string>
+  </property>
   <widget class="QPushButton" name="pushButton_add">
    <property name="geometry">
     <rect>
-     <x>220</x>
+     <x>190</x>
      <y>180</y>
-     <width>81</width>
+     <width>111</width>
      <height>31</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton  {
+	background-color: rgb(255, 255, 255); 
+  font-weight: 600;
+  border-radius: 6px;
+  border: 1px solid rgb(0, 0, 0);
+}
+
+QPushButton:hover {
+  background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:1, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(162, 216, 255, 255));;
+  border: 2px solid rgb(55, 111, 167);
+}
+
+QPushButton:pressed  {
+  background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:1, stop:0  rgba(162, 216, 255, 255), stop:1  rgba(255, 255, 255, 255));;
+  border: 2px solid rgb(55, 111, 167);
+}</string>
    </property>
    <property name="text">
     <string>Добавить</string>
@@ -59,7 +80,7 @@
     <rect>
      <x>10</x>
      <y>180</y>
-     <width>211</width>
+     <width>171</width>
      <height>31</height>
     </rect>
    </property>
