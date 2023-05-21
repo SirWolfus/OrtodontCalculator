@@ -20,7 +20,7 @@ class Data:
         query.exec("CREATE TABLE IF NOT EXISTS Patients "
                    "(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,"
                    "Name VARCHAR(50) NOT NULL,"
-                   "Date TEXT,"
+                   "Date DATE,"
                    "Info1 TEXT,"
                    "Info2 TEXT)")
         return True
@@ -42,14 +42,31 @@ class Data:
     def add_new_patient(self, name, date, info1, info2):
         sql_query = "INSERT INTO Patients (Name, Date, Info1,Info2) VALUES (?, ?, ?, ?)"
         self.execute_query_with_params(sql_query, [name, date, info1, info2])
-        # print(name,date,info1,info2)
+
+    def save_patient(self, ID, date, info1, info2):
+        sql_query = f"UPDATE Patients SET Date = '{date}',Info1 = '{info1}', Info2='{info2}' WHERE ID = {ID}"
+        self.execute_query_with_params(sql_query)
+        return True
+
 
     def add_box_pat(self):
-        sql_query = f"SELECT Name, Date FROM Patients"
+        sql_query = f"SELECT ID,Name, Date FROM Patients"
         data = self.execute_query_with_params(sql_query)
-        lst=[]
+        combobox_dict = dict()
         data.first()
         while data.isValid():
-            lst.append(f"{data.value('Name')} ({data.value('Date')})")
+            combobox_dict[f"{data.value('Name')} : {data.value('Date')}"] = data.value('ID')
             data.next()
-        return sorted(lst)
+        return combobox_dict
+
+    def return_pat_data(self, ID):
+        sql_query = f"SELECT Info1,Info2, Date FROM Patients WHERE ID = {ID} "
+        data = self.execute_query_with_params(sql_query)
+        data.first()
+        info1 = [float(i) for i in data.value('Info1').split('*')]
+        info2 = [float(i) for i in data.value('Info2').split('*')]
+        return (info1, info2)
+
+    def del_pat(self,ID):
+        sql_query = f"DELETE FROM Patients WHERE ID = {ID}"
+        data = self.execute_query_with_params(sql_query)

@@ -422,78 +422,27 @@ class Ui_MainWindow(object):
 
         self.layoutWidget2 = QWidget(self.centralwidget)
         self.layoutWidget2.setObjectName(u"layoutWidget2")
-        self.layoutWidget2.setGeometry(QRect(1000, 450, 481, 42))
-        self.horizontalLayout_8 = QHBoxLayout(self.layoutWidget2)
-        self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
-        self.horizontalLayout_8.setContentsMargins(0, 0, 0, 0)
-        self.calculate_btn = QPushButton(self.layoutWidget2)
-        self.calculate_btn.setObjectName(u"calculate_btn")
-        self.calculate_btn.setMinimumSize(QSize(0, 40))
-        font3 = QFont()
-        font3.setFamilies([u"Book Antiqua"])
-        font3.setPointSize(12)
-        font3.setBold(True)
-        font3.setItalic(False)
-        self.calculate_btn.setFont(font3)
-        self.calculate_btn.setStyleSheet(u"QPushButton  {\n"
-"	background-color: rgb(255, 255, 255); \n"
-"  font-weight: 600;\n"
-"  border-radius: 6px;\n"
-"  border: 1px solid rgb(0, 0, 0);\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"  background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:1, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(162, 216, 255, 255));;\n"
-"  border: 2px solid rgb(55, 111, 167);\n"
-"}\n"
-"\n"
-"QPushButton:pressed  {\n"
-"  background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:1, stop:0  rgba(162, 216, 255, 255), stop:1  rgba(255, 255, 255, 255));;\n"
-"  border: 2px solid rgb(55, 111, 167);\n"
-"}")
-
-        self.horizontalLayout_8.addWidget(self.calculate_btn)
-
-        self.calculate_btn_3 = QPushButton(self.layoutWidget2)
-        self.calculate_btn_3.setObjectName(u"calculate_btn_3")
-        self.calculate_btn_3.setMinimumSize(QSize(0, 40))
-        self.calculate_btn_3.setStyleSheet(u"QPushButton  {\n"
-"	background-color: rgb(255, 255, 255); \n"
-"  font-weight: 600;\n"
-"  border-radius: 6px;\n"
-"  border: 1px solid rgb(0, 0, 0);\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"  background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:1, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(162, 216, 255, 255));;\n"
-"  border: 2px solid rgb(55, 111, 167);\n"
-"}\n"
-"\n"
-"QPushButton:pressed  {\n"
-"  background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:1, stop:0  rgba(162, 216, 255, 255), stop:1  rgba(255, 255, 255, 255));;\n"
-"  border: 2px solid rgb(55, 111, 167);\n"
-"}")
-
-        self.horizontalLayout_8.addWidget(self.calculate_btn_3)
-
-        self.layoutWidget3 = QWidget(self.centralwidget)
-        self.layoutWidget3.setObjectName(u"layoutWidget3")
-        self.layoutWidget3.setGeometry(QRect(14, 10, 1481, 32))
-        self.horizontalLayout_11 = QHBoxLayout(self.layoutWidget3)
+        self.layoutWidget2.setGeometry(QRect(14, 10, 1481, 32))
+        self.horizontalLayout_11 = QHBoxLayout(self.layoutWidget2)
         self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
         self.horizontalLayout_11.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_10 = QHBoxLayout()
         self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
         self.horizontalLayout_9 = QHBoxLayout()
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
-        self.pat_label = QLabel(self.layoutWidget3)
+        self.pat_label = QLabel(self.layoutWidget2)
         self.pat_label.setObjectName(u"pat_label")
+        font3 = QFont()
+        font3.setFamilies([u"Book Antiqua"])
+        font3.setPointSize(12)
+        font3.setBold(True)
+        font3.setItalic(False)
         self.pat_label.setFont(font3)
         self.pat_label.setStyleSheet(u"font-weight: bold;")
 
         self.horizontalLayout_9.addWidget(self.pat_label)
 
-        self.pat_selector = QComboBox(self.layoutWidget3)
+        self.pat_selector = QComboBox(self.layoutWidget2)
         self.pat_selector.setObjectName(u"pat_selector")
         self.pat_selector.setMinimumSize(QSize(0, 25))
         self.pat_selector.setStyleSheet(u"border: 1px solid rgb(0, 0, 0);")
@@ -511,7 +460,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5 = QHBoxLayout()
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.horizontalLayout_5.setSizeConstraint(QLayout.SetMinAndMaxSize)
-        self.add_pat_btn = QPushButton(self.layoutWidget3)
+        self.add_pat_btn = QPushButton(self.layoutWidget2)
         self.add_pat_btn.setObjectName(u"add_pat_btn")
         sizePolicy3 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Maximum)
         sizePolicy3.setHorizontalStretch(0)
@@ -538,31 +487,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_5.addWidget(self.add_pat_btn)
 
-        self.add_pat_btn_2 = QPushButton(self.layoutWidget3)
-        self.add_pat_btn_2.setObjectName(u"add_pat_btn_2")
-        sizePolicy3.setHeightForWidth(self.add_pat_btn_2.sizePolicy().hasHeightForWidth())
-        self.add_pat_btn_2.setSizePolicy(sizePolicy3)
-        self.add_pat_btn_2.setMinimumSize(QSize(0, 25))
-        self.add_pat_btn_2.setStyleSheet(u"QPushButton  {\n"
-"	background-color: rgb(255, 255, 255); \n"
-"  font-weight: 600;\n"
-"  border-radius: 6px;\n"
-"  border: 1px solid rgb(0, 0, 0);\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"  background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:1, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(162, 216, 255, 255));;\n"
-"  border: 2px solid rgb(55, 111, 167);\n"
-"}\n"
-"\n"
-"QPushButton:pressed  {\n"
-"  background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:1, stop:0  rgba(162, 216, 255, 255), stop:1  rgba(255, 255, 255, 255));;\n"
-"  border: 2px solid rgb(55, 111, 167);\n"
-"}")
-
-        self.horizontalLayout_5.addWidget(self.add_pat_btn_2)
-
-        self.del_pat_btn = QPushButton(self.layoutWidget3)
+        self.del_pat_btn = QPushButton(self.layoutWidget2)
         self.del_pat_btn.setObjectName(u"del_pat_btn")
         sizePolicy3.setHeightForWidth(self.del_pat_btn.sizePolicy().hasHeightForWidth())
         self.del_pat_btn.setSizePolicy(sizePolicy3)
@@ -597,7 +522,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_6 = QHBoxLayout()
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
         self.horizontalLayout_6.setSizeConstraint(QLayout.SetMinAndMaxSize)
-        self.normodent = QPushButton(self.layoutWidget3)
+        self.normodent = QPushButton(self.layoutWidget2)
         self.normodent.setObjectName(u"normodent")
         sizePolicy3.setHeightForWidth(self.normodent.sizePolicy().hasHeightForWidth())
         self.normodent.setSizePolicy(sizePolicy3)
@@ -621,7 +546,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_6.addWidget(self.normodent)
 
-        self.macrodent = QPushButton(self.layoutWidget3)
+        self.macrodent = QPushButton(self.layoutWidget2)
         self.macrodent.setObjectName(u"macrodent")
         sizePolicy3.setHeightForWidth(self.macrodent.sizePolicy().hasHeightForWidth())
         self.macrodent.setSizePolicy(sizePolicy3)
@@ -645,7 +570,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_6.addWidget(self.macrodent)
 
-        self.microdent = QPushButton(self.layoutWidget3)
+        self.microdent = QPushButton(self.layoutWidget2)
         self.microdent.setObjectName(u"microdent")
         sizePolicy3.setHeightForWidth(self.microdent.sizePolicy().hasHeightForWidth())
         self.microdent.setSizePolicy(sizePolicy3)
@@ -674,14 +599,130 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_11.setStretch(0, 71)
         self.horizontalLayout_11.setStretch(1, 36)
+        self.main_info_label = QLabel(self.centralwidget)
+        self.main_info_label.setObjectName(u"main_info_label")
+        self.main_info_label.setGeometry(QRect(1000, 560, 491, 31))
+        self.widget = QWidget(self.centralwidget)
+        self.widget.setObjectName(u"widget")
+        self.widget.setGeometry(QRect(1000, 440, 491, 92))
+        self.verticalLayout = QVBoxLayout(self.widget)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_7 = QHBoxLayout()
+        self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
+        self.from_pat_btn = QPushButton(self.widget)
+        self.from_pat_btn.setObjectName(u"from_pat_btn")
+        sizePolicy3.setHeightForWidth(self.from_pat_btn.sizePolicy().hasHeightForWidth())
+        self.from_pat_btn.setSizePolicy(sizePolicy3)
+        self.from_pat_btn.setMinimumSize(QSize(0, 40))
+        self.from_pat_btn.setBaseSize(QSize(0, 40))
+        self.from_pat_btn.setStyleSheet(u"QPushButton  {\n"
+"	background-color: rgb(255, 255, 255); \n"
+"  font-weight: 600;\n"
+"  border-radius: 6px;\n"
+"  border: 1px solid rgb(0, 0, 0);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"  background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:1, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(162, 216, 255, 255));;\n"
+"  border: 2px solid rgb(55, 111, 167);\n"
+"}\n"
+"\n"
+"QPushButton:pressed  {\n"
+"  background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:1, stop:0  rgba(162, 216, 255, 255), stop:1  rgba(255, 255, 255, 255));;\n"
+"  border: 2px solid rgb(55, 111, 167);\n"
+"}")
+
+        self.horizontalLayout_7.addWidget(self.from_pat_btn)
+
+        self.save_pat_btn = QPushButton(self.widget)
+        self.save_pat_btn.setObjectName(u"save_pat_btn")
+        sizePolicy3.setHeightForWidth(self.save_pat_btn.sizePolicy().hasHeightForWidth())
+        self.save_pat_btn.setSizePolicy(sizePolicy3)
+        self.save_pat_btn.setMinimumSize(QSize(0, 40))
+        self.save_pat_btn.setStyleSheet(u"QPushButton  {\n"
+"	background-color: rgb(255, 255, 255); \n"
+"  font-weight: 600;\n"
+"  border-radius: 6px;\n"
+"  border: 1px solid rgb(0, 0, 0);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"  background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:1, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(162, 216, 255, 255));;\n"
+"  border: 2px solid rgb(55, 111, 167);\n"
+"}\n"
+"\n"
+"QPushButton:pressed  {\n"
+"  background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:1, stop:0  rgba(162, 216, 255, 255), stop:1  rgba(255, 255, 255, 255));;\n"
+"  border: 2px solid rgb(55, 111, 167);\n"
+"}")
+
+        self.horizontalLayout_7.addWidget(self.save_pat_btn)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout_7)
+
+        self.horizontalLayout_8 = QHBoxLayout()
+        self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
+        self.calculate_btn = QPushButton(self.widget)
+        self.calculate_btn.setObjectName(u"calculate_btn")
+        self.calculate_btn.setMinimumSize(QSize(0, 40))
+        self.calculate_btn.setFont(font3)
+        self.calculate_btn.setStyleSheet(u"QPushButton  {\n"
+"	background-color: rgb(255, 255, 255); \n"
+"  font-weight: 600;\n"
+"  border-radius: 6px;\n"
+"  border: 1px solid rgb(0, 0, 0);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"  background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:1, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(162, 216, 255, 255));;\n"
+"  border: 2px solid rgb(55, 111, 167);\n"
+"}\n"
+"\n"
+"QPushButton:pressed  {\n"
+"  background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:1, stop:0  rgba(162, 216, 255, 255), stop:1  rgba(255, 255, 255, 255));;\n"
+"  border: 2px solid rgb(55, 111, 167);\n"
+"}")
+
+        self.horizontalLayout_8.addWidget(self.calculate_btn)
+
+        self.calculate_btn_3 = QPushButton(self.widget)
+        self.calculate_btn_3.setObjectName(u"calculate_btn_3")
+        self.calculate_btn_3.setMinimumSize(QSize(0, 40))
+        self.calculate_btn_3.setStyleSheet(u"QPushButton  {\n"
+"	background-color: rgb(255, 255, 255); \n"
+"  font-weight: 600;\n"
+"  border-radius: 6px;\n"
+"  border: 1px solid rgb(0, 0, 0);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"  background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:1, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(162, 216, 255, 255));;\n"
+"  border: 2px solid rgb(55, 111, 167);\n"
+"}\n"
+"\n"
+"QPushButton:pressed  {\n"
+"  background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:1, stop:0  rgba(162, 216, 255, 255), stop:1  rgba(255, 255, 255, 255));;\n"
+"  border: 2px solid rgb(55, 111, 167);\n"
+"}")
+
+        self.horizontalLayout_8.addWidget(self.calculate_btn_3)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout_8)
+
         MainWindow.setCentralWidget(self.centralwidget)
-        self.layoutWidget.raise_()
-        self.layoutWidget.raise_()
+        self.layoutWidget2.raise_()
+        self.layoutWidget2.raise_()
         self.ton_frame.raise_()
         self.bolton_frame.raise_()
         self.pon_frame.raise_()
         self.bcgrnd_img.raise_()
         self.zub_fram.raise_()
+        self.from_pat_btn.raise_()
+        self.save_pat_btn.raise_()
+        self.main_info_label.raise_()
         QWidget.setTabOrder(self.zub_16, self.zub_15)
         QWidget.setTabOrder(self.zub_15, self.zub_14)
         QWidget.setTabOrder(self.zub_14, self.zub_13)
@@ -732,14 +773,16 @@ class Ui_MainWindow(object):
         self.bolton_name.setText(QCoreApplication.translate("MainWindow", u"\u041c\u0435\u0442\u043e\u0434 \u0411\u043e\u043b\u0442\u043e\u043d\u0430", None))
         self.bolton_Anterior.setText(QCoreApplication.translate("MainWindow", u"Anterior Ratio (n = 77,2%): --", None))
         self.bolton_Overall.setText(QCoreApplication.translate("MainWindow", u"Overall Ratio (n = 91,3%): --", None))
-        self.calculate_btn.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0430\u0441\u0447\u0438\u0442\u0430\u0442\u044c", None))
-        self.calculate_btn_3.setText(QCoreApplication.translate("MainWindow", u"\u042d\u043a\u0441\u043f\u043e\u0440\u0442", None))
         self.pat_label.setText(QCoreApplication.translate("MainWindow", u"\u041f\u0430\u0446\u0438\u0435\u043d\u0442", None))
         self.add_pat_btn.setText(QCoreApplication.translate("MainWindow", u"\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c", None))
-        self.add_pat_btn_2.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c", None))
         self.del_pat_btn.setText(QCoreApplication.translate("MainWindow", u"\u0423\u0434\u0430\u043b\u0438\u0442\u044c", None))
         self.normodent.setText(QCoreApplication.translate("MainWindow", u"\u041d\u043e\u0440\u043c\u043e\u0434\u0435\u043d\u0442\u0438\u044f", None))
         self.macrodent.setText(QCoreApplication.translate("MainWindow", u"\u041c\u0430\u043a\u0440\u043e\u0434\u0435\u043d\u0442\u0438\u044f", None))
         self.microdent.setText(QCoreApplication.translate("MainWindow", u"\u041c\u0438\u043a\u0440\u043e\u0434\u0435\u043d\u0442\u0438\u044f", None))
+        self.main_info_label.setText("")
+        self.from_pat_btn.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u043f\u043e\u043b\u043d\u0438\u0442\u044c \u0438\u0437 \u043f\u0430\u0446\u0438\u0435\u043d\u0442\u0430", None))
+        self.save_pat_btn.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u043f\u0430\u0446\u0438\u0435\u043d\u0442\u0443", None))
+        self.calculate_btn.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0430\u0441\u0447\u0438\u0442\u0430\u0442\u044c", None))
+        self.calculate_btn_3.setText(QCoreApplication.translate("MainWindow", u"\u042d\u043a\u0441\u043f\u043e\u0440\u0442 \u0432 \u0431\u0443\u0444\u0435\u0440 \u043e\u0431\u043c\u0435\u043d\u0430", None))
     # retranslateUi
 
