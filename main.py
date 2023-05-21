@@ -1,36 +1,81 @@
 import sys
 import pyperclip
 from PySide6 import QtWidgets
-from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton, QComboBox, QCompleter, QDialog
+from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox
 from window_ortocalc import Ui_MainWindow
-from add_pat_window import Pat_Window, Ui_widget
+from add_pat_window import Ui_widget
 from MethodCalculate import MethodCalculate as mc
 from db_connection import Data as conn
 from datetime import datetime as dt
 
 
 class OrtoCalc(QMainWindow):
+
     def __init__(self):
         super(OrtoCalc, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.w = None
-        self.mc = mc()
-        self.conn = conn()
-        # self.combo_data = db_module.db_pat_box()
+        self.w = None  # Хранит количество дополнительно открытых окон
+        self.mc = mc()  # Класс Калькулятор методов, нужен ли о н подумать
+        self.conn = conn()  # Класс коннектор для SQL
 
         # Кнопки
-        self.ui.calculate_btn.clicked.connect(self.calculate_all)
-        self.ui.normodent.clicked.connect(self.btn_norm)
-        self.ui.macrodent.clicked.connect(self.btn_macro)
-        self.ui.microdent.clicked.connect(self.btn_micro)
-        self.ui.clear_btn.clicked.connect(self.btn_clear)
-        self.ui.add_pat_btn.clicked.connect(self.db_add)
+        self.ui.calculate_btn.clicked.connect(self.calculate_all)  # Расчитать все
+        self.ui.normodent.clicked.connect(self.btn_norm)  # Нормодентия
+        self.ui.macrodent.clicked.connect(self.btn_macro)  # Макродентия
+        self.ui.microdent.clicked.connect(self.btn_micro)  # Микродентия
+        self.ui.clear_btn.clicked.connect(self.btn_clear)  # Очищаем данные
+        self.ui.add_pat_btn.clicked.connect(self.db_add)  # Добавляем пациента в базу
+        self.ui.del_pat_btn.clicked.connect(self.db_del)  # Удаляем пациента из базы
+        self.ui.save_pat_btn.clicked.connect(self.save_data_to_pat)  # Сохраняем данные в пациента
+        self.ui.from_pat_btn.clicked.connect(self.load_data_from_pat)  # Заполняем данные из пациента
+        self.ui.calculate_btn_3.clicked.connect(self.copy_to_bufer)  # Копируем в буфер
 
         # Селектор
-        self.ui.pat_selector.completer().setCompletionMode(QCompleter.CompletionMode.PopupCompletion)
-        self.ui.pat_selector.addItems(self.conn.add_box_pat())
-        self.ui.pat_selector.setCurrentText('')
+        self.ui.pat_selector.addItems(sorted(self.conn.add_box_pat()))
+        self.ui.pat_selector.setCurrentText(None)
+
+    def set_info_label(self, info):  # заполняем поле инфо
+        self.ui.main_info_label.setText(info)
+
+    def message_window(self, title='Внимание', text='Тест'):
+        res = QMessageBox.question(self, title, text)
+        return res
+
+    def save_data_to_pat(self):
+
+        if self.conn.add_box_pat().get(str(self.ui.pat_selector.currentText()),
+                                       False) and self.ui.pat_selector.currentText() != '':
+            if self.message_window('Внимание', 'Новые данные будут сохранены для пациента.') == QMessageBox.Yes:
+                id = self.conn.add_box_pat()[str(self.ui.pat_selector.currentText())]
+                date = dt.date(dt.now()).strftime('%d.%m.%Y')
+                info1 = '*'.join([str(i) for i in self.jaw_re()])
+                info2 = '*'.join([str(i) for i in self.jaw_index_re()])
+                if self.conn.save_patient(id, date, info1, info2):
+                    self.ui.pat_selector.clear()
+                    self.ui.pat_selector.addItems(self.conn.add_box_pat())
+                    self.ui.pat_selector.setCurrentText(f"{self.ui.pat_selector.currentText().split(' :')[0]} : {date}")
+                    self.set_info_label('Данные успешно сохранены!')
+            else:
+                self.set_info_label('Отмена сохранения')
+        else:
+            self.set_info_label('Выберите пациента!!!')
+
+    def load_data_from_pat(self):
+        if self.conn.add_box_pat().get(str(self.ui.pat_selector.currentText()),
+                                       False) and self.ui.pat_selector.currentText() != '':
+            if self.message_window('Внимание', 'Новые данные будут сохранены для пациента.') == QMessageBox.Yes:
+                id = self.conn.add_box_pat()[str(self.ui.pat_selector.currentText())]
+                try:
+                    info1, info2 = self.conn.return_pat_data(id)
+                    self.field_setter(info1, info2)
+                    self.set_info_label('Данные загружены!')
+                except:
+                    self.set_info_label('Ошибка')
+            else:
+                self.set_info_label('Отмена сохранения')
+        else:
+            self.set_info_label('Выберите пациента!!!')
 
     def db_add(self):
         if self.w is None:
@@ -44,6 +89,24 @@ class OrtoCalc(QMainWindow):
             self.w.close()
             self.w = None
 
+    def db_del(self):
+        if self.conn.add_box_pat().get(str(self.ui.pat_selector.currentText()),
+                                       False) and self.ui.pat_selector.currentText() != '':
+            if self.message_window('Внимание', 'Пациент будет удален из базы.') == QMessageBox.Yes:
+                id = self.conn.add_box_pat()[str(self.ui.pat_selector.currentText())]
+                try:
+                    self.conn.del_pat(id)
+                    self.ui.pat_selector.clear()
+                    self.ui.pat_selector.addItems(self.conn.add_box_pat())
+                    self.ui.pat_selector.setCurrentText(None)
+                    self.set_info_label('Пациент удален!')
+                except:
+                    self.set_info_label('Ошибка')
+            else:
+                self.set_info_label('Отмена удаления')
+        else:
+            self.set_info_label('Выберите пациента!!!')
+
     def add_to_base(self):
         name = f'{self.ui_window.lineEdit_Fam.text()} {self.ui_window.lineEdit_name.text()} ' \
                f'{self.ui_window.lineEdit_surname.text()}'
@@ -51,18 +114,38 @@ class OrtoCalc(QMainWindow):
         info1 = '*'.join([str(i) for i in mc.pat_clear])
         info2 = '*'.join([str(i) for i in mc.ind_pat_clear])
         if self.conn.filter_pat(name, date):
-            self.ui_window.label_info.setText('Повтор данных!')
+            self.set_info_label('Повтор данных!')
         else:
             self.conn.add_new_patient(name, date, info1, info2)
             self.new_window.close()
             self.ui.pat_selector.clear()
             self.ui.pat_selector.addItems(self.conn.add_box_pat())
-            self.ui.pat_selector.setCurrentText('')
+            self.ui.pat_selector.setCurrentText(f'{name} : {date}')
+            self.set_info_label('Пациент успешно добавлен.')
+
+    def copy_to_bufer(self):
+        text = \
+            f'''Пациент: {self.ui.pat_selector.currentText()} 
+    Метод Пона.
+{self.ui.pon_1.text()}
+{self.ui.pon_2.text()}
+{self.ui.pon_3.text()}
+{self.ui.pon_4.text()}
+    Метод Тона.
+{self.ui.ton_1.text()}
+{self.ui.ton_2.text()}
+{self.ui.ton_3.text()}
+    Метод Болтона.
+{self.ui.bolton_Anterior.text()}
+{self.ui.bolton_Overall.text()}'''
+        pyperclip.copy(text)
+        self.set_info_label('Данные скопированы в буфер обмена.')
 
     def calculate_all(self):  # Расчет всех методов
         self.pon_method()
         self.ton_method()
         self.bolton_method()
+        self.set_info_label('Расчет выполнен')
 
     def jaw_re_field(self) -> list:
         return [self.ui.zub_16, self.ui.zub_15, self.ui.zub_14, self.ui.zub_13,
@@ -79,6 +162,9 @@ class OrtoCalc(QMainWindow):
 
     def jaw_re(self) -> list:
         return [i.value() for i in self.jaw_re_field()]
+
+    def jaw_index_re(self) -> list:
+        return [i.value() for i in self.jaw_index_field()]
 
     def pon_method(self):  # методо Пона
         jaw_ton = self.jaw_re()
